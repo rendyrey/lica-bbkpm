@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use DB;
 use App\FinishTransaction;
+use App\FinishTransactionTest;
 use Illuminate\Support\Carbon;
 use Auth;
 use PDF;
@@ -689,10 +690,16 @@ class ReportController extends Controller
 
         $model->where('created_time', '>=', $from);
         $model->where('created_time', '<=', $to);
+
         return DataTables::of($model)
             ->addIndexColumn()
-            ->addColumn('test_names', function($data) {
-                $ftt = DB::table('finish_transaction_tests')->select('test_name')->where('finish_transaction_id', $data->id)->get();
+            ->addColumn('test_names', function($data) use($test_id) {
+                if ($test_id != null && $test_id != "null" && $test_id != 0) {
+                    $ftt = DB::table('finish_transaction_tests')->select('test_name')->where('finish_transaction_id', $data->id)->where('test_id', $test_id)->get();
+                } else {
+                    $ftt = DB::table('finish_transaction_tests')->select('test_name')->where('finish_transaction_id', $data->id)->get();
+                }
+
                 $names = '';
                 foreach($ftt as $key => $value) {
                     $names .= $value->test_name;
@@ -702,9 +709,12 @@ class ReportController extends Controller
                 }
                 return $names;
             })
-            ->addColumn('test_global_results', function($data) { 
-                $ftt = DB::table('finish_transaction_tests')->select('test_name', 'global_result', 'unit')->where('finish_transaction_id', $data->id)->get();
-                $ftt = DB::table('finish_transaction_tests')->select('test_name', 'global_result', 'unit')->where('finish_transaction_id', $data->id)->get();
+            ->addColumn('test_global_results', function($data) use($test_id) { 
+                if ($test_id != null && $test_id != "null" && $test_id != 0) {
+                    $ftt = DB::table('finish_transaction_tests')->select('test_name', 'global_result', 'unit')->where('finish_transaction_id', $data->id)->where('test_id', $test_id)->get();
+                } else {
+                    $ftt = DB::table('finish_transaction_tests')->select('test_name', 'global_result', 'unit')->where('finish_transaction_id', $data->id)->get();
+                }
                 $global_result = '';
                 foreach($ftt as $key => $value) {
                     $global_result .= $value->test_name.": ".$value->global_result." ".$value->unit;

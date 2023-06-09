@@ -406,6 +406,10 @@ class PreAnalyticController extends Controller
                             $class = $transaction->room->class;
                             $this->createTransactionTestsFromPackage($inputData, $class);
                             break;
+                        case 'grand_package':
+                            $inputData['grand_package_id'] = $test->id;
+                            $class = $transaction->room->class;
+                            $this->createTransactionTestsFromGrandPackage($inputData, $class);
                         default:
                     }
                 }

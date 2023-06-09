@@ -1550,9 +1550,13 @@ var createNewData = function() {
         $("#back-btn").trigger('click'); // click back manually on stepper
         DatatablesServerSide.refreshTable();
         $("#select-room").prop('disabled', true);
+        $("#new-data-submit").prop('disabled', false);
+        $("#new-data-submit").html('Submit');
     },
     error: function (request, status, error) {
         toastr.error(request.responseJSON.message);
+        $("#new-data-submit").prop('disabled', false);
+        $("#new-data-submit").html('Submit');
     }
   })
 }
@@ -2090,6 +2094,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   $(newFormId).on('submit', function(e) {
+
     e.preventDefault();
     if (selectedTestIds.length == 0) {
       Swal.fire({
@@ -2105,6 +2110,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if ($(this).valid()) {
+      $("#new-data-submit").prop('disabled', true);
+      $("#new-data-submit").html('Submitting...')
       createNewData();
     }
   });
