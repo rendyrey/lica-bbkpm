@@ -1021,8 +1021,8 @@ class PrintController extends Controller
 
                       // di jawab tanggal       
                     $jawab_tanggal_query = DB::table('transaction_tests')
-                    ->select('transaction_tests.*')
-                    ->where('transaction_tests.transaction_id', '=', $transactionId)->first();
+                    ->select('result_date')
+                    ->where('transaction_id', '=', $transactionId)->where(DB::raw('result_date IS NOT NULL'))->first();
                 if ($jawab_tanggal_query) {
                     $jawab_tanggal = $jawab_tanggal_query->result_date;
                 } else {

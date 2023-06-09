@@ -144,7 +144,7 @@
                 <td>:</td>
                 <td style="border-right: 1px solid black;">{{ $transaction->patient_medrec }}</td>
                 <td rowspan="2" style="border-right: 1px solid black; text-align: center"><?= date('d/m/Y', strtotime($transaction->created_time)); ?> </td>
-                <td rowspan="2" style="text-align: center">{{ $jawab_tanggal }}</td>
+                <td rowspan="2" style="text-align: center">{{ date('d/m/Y', strtotime($jawab_tanggal)) }}</td>
             </tr>
             <tr>
                 <td>Jenis Kelamin/Umur</td>
