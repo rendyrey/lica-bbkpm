@@ -165,7 +165,7 @@
                 <td colspan="2" style="padding-top : -65px;">
                     {!! $test->result_text !!}
 
-                <span style="font-size : 12px;"> {!! $test->result_label !!} </span> 
+                <span style="font-size : 12px;"> {!! $test->global_result !!} </span> 
 
                 </td>
             </tr>
