@@ -936,13 +936,13 @@ class PreAnalyticController extends Controller
                         $class = $room->class;
                         $this->createTransactionTestsFromPackage($inputData, $class);
                         break;
-                        case 'grand_package':
-                            // echo 'id nya adalah : ' . $test->id;
-                            // die;
-                            $inputData['grand_package_id'] = $test->id;
-                            $class = $room->class;
-                            $this->createTransactionTestsFromGrandPackage($inputData, $class);
-                            break;
+                    case 'grand_package':
+                        // echo 'id nya adalah : ' . $test->id;
+                        // die;
+                        $inputData['grand_package_id'] = $test->id;
+                        $class = $room->class;
+                        $this->createTransactionTestsFromGrandPackage($inputData, $class);
+                        break;
                     default:
                 }
             }
@@ -996,6 +996,7 @@ class PreAnalyticController extends Controller
         foreach ($tests as $test) {
             $inputData['test_id'] = $test->test_id;
             $inputData['package_id'] = $test->package_id;
+            $inputData['type'] = $test->package_id ? 'package' : 'single';
 
             //check have default or not
             $checkDefaultAnalyzer = \App\Analyzer::where('group_id', $test->group_id)->where('is_default', 1)->first();
