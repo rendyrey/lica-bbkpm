@@ -557,6 +557,10 @@ class MasterController extends Controller
                 break;
             case 'price':
                 $exists[] = \App\TransactionTest::where('price_id', $id)->exists();
+                break;
+            case 'specimen':
+                $exists[] = \App\Test::where('specimen_id', $id)->exists();
+                break;
             default:
                 $exists[] = false;
         }
