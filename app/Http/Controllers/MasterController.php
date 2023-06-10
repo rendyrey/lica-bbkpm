@@ -503,6 +503,10 @@ class MasterController extends Controller
             $data = $this->masters[$masterData]::findOrFail($id);
             $data->delete();
 
+            if ($masterData == 'grand-package') {
+                DB::table('grand_package_tests')->where('grand_package_id', $id)->delete();
+            }
+
             $this->logActivity(
                 "Delete $masterData with ID $id",
                 json_encode($data)
@@ -539,11 +543,9 @@ class MasterController extends Controller
             case 'package':
                 $exists[] = \App\Price::where('package_id', $id)->exists();
                 break;
-                case 'grand-package':
-                    $exists[] = \App\Price::where('grand_package_id', $id)->exists();
-                    // $exists[] = \App\GrandPackageTest::where('grand_package_id', $id)->exists();
-                    DB::table('grand_package_tests')->where('grand_package_id', $id)->delete();
-                    break;
+            case 'grand-package':
+                $exists[] = \App\Price::where('grand_package_id', $id)->exists();
+                break;
             case 'interfacing':
                 $interfacing = \App\Interfacing::findOrFail($id);
                 $exists[] = \App\TransactionTest::where('test_id', $interfacing->test_id)->exists();
