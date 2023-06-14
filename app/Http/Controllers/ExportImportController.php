@@ -21,6 +21,10 @@ class ExportImportController extends Controller
             $data = Excel::toArray('', $request->file('file_excel'))[0];
             DB::beginTransaction();
             foreach(array_slice($data, 1) as $row) {
+                if ($row[1] == NULL || $row[1] == '') {
+                    continue;
+                }
+
                 $patient = Patient::where('medrec', $row[1])->first();
                 if ($patient) {
                     $patient->medrec = $row[1];
@@ -47,6 +51,7 @@ class ExportImportController extends Controller
             DB::commit();
             return redirect('master/patient')->with('message','Successfully Import Patient Data')->with('panel','success');
         } catch (\Exception $e){
+            dd($e);
             DB::rollback();
             return redirect('master/patient')->with('message', "Error import patient data, please pay attention to the format, you can export first the patient data")->with('panel','danger');
         }
