@@ -372,6 +372,16 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+// Export Data
+Route::prefix('exports')->group(function() {
+    Route::get('patients', 'ExportImportController@patientsExport')->name('export-patient');
+});
+
+// Import Data
+Route::prefix('imports')->group(function() {
+    Route::post('patients', 'ExportImportController@patientsImport')->name('import-patient');
+});
+
 //utility
 Route::get('/run-migrations', function () {
     return Artisan::call('migrate', ["--force" => true]);
