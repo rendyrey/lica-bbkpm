@@ -1834,20 +1834,19 @@ class PrintController extends Controller
                 // ->select('created_time', 'analytic_time')
                 ->where('transactions.id', $id)
                 ->where('transaction_tests.validate', 1)
-                ->where('groups.id', $groupId)
+                ->where('transaction_tests.group_id', $groupId)
                 ->orderBy('sequence', 'asc')
                 ->orderBy('sub_group', 'asc');
 
             $query_transaction_tests = $query_transaction_tests->get();
 
-            // dd($query_transaction_tests);
             $query_group = DB::table('transaction_tests')
                 ->select('groups.name as group_name')
                 ->leftJoin('tests', 'tests.id', '=', 'transaction_tests.test_id')
                 ->leftJoin('groups', 'tests.group_id', '=', 'groups.id')
                 ->where('transaction_id', '=', $id)
                 ->where('transaction_tests.validate', 1)
-                ->where('groups.id', $groupId);
+                ->where('transaction_tests.group_id', $groupId);
 
             $query_group = $query_group
                 ->orderBy('sequence', 'asc')
@@ -2140,13 +2139,12 @@ class PrintController extends Controller
                 ->where('transaction_tests.validate', 1)
                 ->where('tests.name', '!=', 'Nomor Sediaan')
                 ->where('tests.name', '!=', 'Dijawab Tanggal')
-                ->where('groups.id', $groupId)
+                ->where('transaction_tests.group_id', $groupId)
                 ->orderBy('sequence', 'asc')
                 ->orderBy('sub_group', 'asc');
 
             $query_transaction_tests = $query_transaction_tests->get();
 
-            // dd($query_transaction_tests);
             $query_group = DB::table('transaction_tests')
                 ->select('groups.name as group_name')
                 ->leftJoin('tests', 'tests.id', '=', 'transaction_tests.test_id')

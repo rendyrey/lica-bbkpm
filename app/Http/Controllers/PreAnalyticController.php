@@ -1000,6 +1000,7 @@ class PreAnalyticController extends Controller
         foreach ($tests as $test) {
             $inputData['test_id'] = $test->test_id;
             $inputData['package_id'] = $test->package_id;
+            $inputData['group_id'] = $test->group_id;
             $inputData['type'] = $test->package_id ? 'package' : 'single';
 
             //check have default or not
